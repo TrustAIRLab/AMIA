@@ -1,0 +1,7 @@
+# The image only needs the requirements files and the pyairports stub; code, data and
+# model weights are bind-mounted at run time.
+*
+!docker/
+!third_party/
+!requirements.txt
+!letta/requirements_letta.txt

@@ -1,0 +1,26 @@
+# Letta experiment — SEPARATE environment.
+#
+# Letta pulls in a large, pinned dependency tree (SQLAlchemy, pydantic v2,
+# an embedded server, etc.) that conflicts with the main requirements.txt
+# (e.g. numpy/pydantic ranges). Install Letta in its OWN venv/conda env and run
+# only letta/ from it:
+#
+#   python -m venv .venv_letta && . .venv_letta/bin/activate
+#   pip install -r non_prompt_injection/new_published/letta/requirements_letta.txt
+#
+# Version: the experiment used **letta 0.10.0** (recorded in
+# letta_experiment/LETTA_EXPERIMENT.md: "Letta v0.10.0 (pip install), SyncServer
+# with SQLite backend"). Verified: 0.10.0 exposes the embedded SyncServer's SYNC
+# methods the scripts use (server.create_agent / send_messages / get_agent_memory
+# + letta.schemas.*), so letta_core.py runs on it unmodified.
+#
+# Do NOT use the current letta (0.16.x+): it refactored SyncServer to async
+# (create_agent_async, ...) and dropped `send_messages`, so these scripts will
+# not run. Pin exactly 0.10.0.
+letta==0.10.0
+asyncpg==0.32.0            # pulled in by letta 0.10.0's ORM import chain
+sqlite-vec==0.1.9          # vector search extension Letta loads for sqlite
+sentence-transformers==6.1.0 # HF embedder multi-qa-MiniLM-L6-cos-v1 (384-dim)
+python-dotenv==1.2.4
+# The OpenAI client ships with Letta; the GPT backbone needs OPENAI_API_KEY.
+# For the Llama backbone, run a vLLM OpenAI-compatible server (see DATA_PREPARATION.md).

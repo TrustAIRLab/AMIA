@@ -1,0 +1,29 @@
+{
+  "judge": "gpt-4.1-mini",
+  "rouge_tau": 0.3,
+  "cells": {
+    "QA/PI": {
+      "n": 200,
+      "rouge_i": 100.0,
+      "sem_i": 98.0,
+      "rouge_r": 98.0,
+      "sem_r": 97.0,
+      "asr_a": 86.5
+    },
+    "QA/Semi-I": {
+      "n": 200,
+      "rouge_i": 100.0,
+      "sem_i": 95.0,
+      "rouge_r": 92.0,
+      "sem_r": 85.5,
+      "asr_a": 71.5
+    }
+  },
+  "all": {
+    "n": 400,
+    "rouge_i": 100.0,
+    "sem_i": 96.5,
+    "rouge_r": 95.0,
+    "sem_r": 91.2
+  }
+}

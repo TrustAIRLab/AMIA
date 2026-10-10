@@ -1,0 +1,3 @@
+# vLLM OpenAI-compatible server with tool calling (Llama backend for Letta, A-MEM and the Llama judges).
+vllm==0.8.5.post1
+transformers==4.51.3

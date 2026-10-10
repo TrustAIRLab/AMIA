@@ -1,0 +1,57 @@
+# AMIA — code release (single-agent, multi-agent, production-memory).
+# Install with:  pip install -r requirements.txt
+#
+# The GPT-4.1-mini runners need only the "retrieval + scoring" and "OpenAI API"
+# groups; vLLM / outlines / torchvision are required only by the local
+# Llama-3.1-70B runners. The "production-memory frameworks" group is needed only
+# by production_memory/ (Mem0 / A-MEM / MemoryOS).
+
+# ─── Retrieval (DPR memory store) + scoring ────────────────────────────────────
+torch==2.4.0
+transformers==4.44.0
+numpy==1.26.4            # must stay < 2.0
+pandas==2.2.2            # reads the Multi-QA CommonsenseQA parquet corpus
+pyarrow==16.1.0          # parquet engine for pandas.read_parquet
+rouge==1.0.1             # ROUGE-L recall for ASR-I / ASR-R (paper's tau=0.3 metric)
+tqdm==4.66.4
+gym==0.26.2              # base env class for the ReAct agent (WikiEnv)
+
+# ─── OpenAI API (GPT-4.1-mini runner) ──────────────────────────────────────────
+openai==2.37.0
+python-dotenv==1.0.1
+
+# ─── Local Llama-3.1-70B serving (single/multi-agent *_llama.py only) ──────────
+vllm==0.5.5
+outlines==0.0.43         # pinned by vLLM 0.5.5
+# outlines 0.0.43 needs `pyairports`; install the bundled package first:
+#   pip install --no-deps ./third_party/pyairports_stub
+torchvision==0.19.0
+
+# ─── Production-memory frameworks (production_memory/ only) ─────────────────────
+# Exact pins below match the paper environment (the May-2026 framework run).
+# mem0ai is pinned to 2.0.2 (the version current at the time of the experiments);
+# its fact-extractor wording differs in later 2.0.x, which shifts the Mem0 ReAct
+# numbers, so keep this pin to reproduce the paper's Mem0 results. sentence-
+# transformers is the one that matters for the other backends (A-MEM / MemoryOS
+# embeddings); the rest are low-impact (faiss IndexFlatIP is exact brute-force,
+# litellm is a transport layer, BM25 is deterministic).
+mem0ai==2.0.2                    # Mem0
+qdrant-client==1.18.0            # Mem0 vector store
+sentence-transformers==2.7.0     # A-MEM + MemoryOS embeddings (all-MiniLM-L6-v2) — paper env
+nltk==3.10.0                     # A-MEM tokenization
+scikit-learn==1.9.0              # A-MEM cosine similarity
+faiss-cpu==1.15.1                # MemoryOS mid-term IndexFlatIP search (exact; version-robust)
+chromadb==1.5.9                  # A-MEM vector store
+litellm==1.83.0                  # A-MEM internal LLM client
+rank-bm25==0.2.2                 # A-MEM BM25 retrieval
+
+# ─── Cross-agent / non-QA agents (non_qa_agents/ only) ──────────────────────────
+# Shared, lightweight deps for the RAP WebShop mock server + scraping and for
+# OpenHands scoring. sentence-transformers (above) also serves RAP/EHR memory
+# embeddings. The heavy, agent-specific frameworks are installed per agent —
+# see each non_qa_agents/<agent>/DATA_PREPARATION.md (openhands-ai + datasets for
+# OpenHands; pyautogen for EHRAgent; mem0ai above is reused by OpenHands).
+flask==3.1.3                     # RAP mock WebShop server
+beautifulsoup4==4.15.0           # RAP WebShop HTML scraping
+requests==2.34.2                 # RAP WebShop HTTP client
+rouge-score==0.1.2               # OpenHands code-summary ROUGE-L (tau=0.3) scoring

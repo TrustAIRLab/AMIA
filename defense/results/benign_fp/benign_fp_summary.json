@@ -1,0 +1,44 @@
+{
+  "judges": {
+    "llama": {
+      "per_agent": {
+        "QA": {
+          "fp": 23,
+          "n": 200,
+          "fp_rate": 11.5
+        },
+        "Multi-QA": {
+          "fp": 13,
+          "n": 195,
+          "fp_rate": 6.7
+        },
+        "ReAct": {
+          "fp": 5,
+          "n": 42,
+          "fp_rate": 11.9
+        }
+      },
+      "mean_fp_rate": 9.4
+    },
+    "gpt4mini": {
+      "per_agent": {
+        "QA": {
+          "fp": 31,
+          "n": 200,
+          "fp_rate": 15.5
+        },
+        "Multi-QA": {
+          "fp": 17,
+          "n": 195,
+          "fp_rate": 8.7
+        },
+        "ReAct": {
+          "fp": 10,
+          "n": 42,
+          "fp_rate": 23.8
+        }
+      },
+      "mean_fp_rate": 13.3
+    }
+  }
+}

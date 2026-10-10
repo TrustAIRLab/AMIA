@@ -1,0 +1,31 @@
+# Secrets — never commit the real key
+.env
+
+# Local model weights (symlink or directory)
+llm_models
+
+# Generated outputs
+single_agent/results/
+single_agent/results_smoke/
+
+# DPR embedding caches (regenerated from the corpora on first run). Keep a local
+# copy to skip the one-time recompute.
+data/*_embeddings/
+
+# Python
+__pycache__/
+*.pyc
+
+# Production-memory outputs + Mem0 qdrant stores
+production_memory/**/results/
+production_memory/**/results_smoke/
+mmlu/results/
+mmlu/results_smoke/
+minja_qa/results/*_full*_minja_summary.json
+minja_qa/results/*_200*_minja_summary.json
+minja_qa/results_smoke/
+letta/results/
+defense/results/*_smoke/
+multi_agent/results/
+multi_agent/results_smoke/
+
